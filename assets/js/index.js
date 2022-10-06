@@ -26,6 +26,7 @@ const student = {
     country: 'Ukraine',
   },
   id: 0,
+  dateOfApplication : new Date(1994, 08, 01),
 };
 //2.2 Создать объект студентской группы, содержащий имя университета, факультета и кафедры 
 const universityGroup = {
@@ -107,7 +108,7 @@ class Book {
     this.#name = name;
   }
   set year(year) {
-    this.#year = year;
+    this.#year = new Date(year, 0, 1);
   }
   set publishingHouse(publishingHouse) {
     this.#publishingHouse = publishingHouse;
@@ -119,7 +120,7 @@ class Book {
     return this.#name;
   }
   get year() {
-    return this.#year;
+    return this.#year.getFullYear();
   }
   get publishingHouse() {
     return this.#publishingHouse;
@@ -146,6 +147,7 @@ class ElectronicBook extends Book {
     return this.#id;
   }  
 }
+const eBook1 = new ElectronicBook('Shevchenko', 'Kobzar', 2022, 'UkrBook', 'pdf', 2233 );
 //5
 //Требуется написать функцию, выводящую в консоль числа от 1 до n, где n — это целое число, 
 //которая функция принимает в качестве параметра, с такими условиями:
@@ -178,3 +180,38 @@ try {
   console.log(e.message);
 }
 
+//6
+//С сервера передается обьект, имеющий следующую структуру:
+const serverResponse = {
+  data: {
+    data: [
+      {
+        id: 0,
+        name: "John",
+        lastName: "Doe",
+      },
+      {
+        id: 1,
+        name: "Jane",
+        lastName: "Doe",
+      },
+      {
+        id: 2,
+        name: "Admin",
+        lastName: "Tiranovich",
+      },
+      {
+        id: 3,
+        name: "User",
+        lastName: "Undefinovich",
+      },
+    ],
+  },
+};
+//С помощью деструктуризации:
+//- создать переменную users на основании массива в обьекте serverResponse
+//const {data: {data}} = serverResponse;
+const { data: {data: users} } = serverResponse;
+console.log(users);
+//- создать отдельные переменные для 3 и 4 пользователя
+const [ , ,user3 , user4] = users;
